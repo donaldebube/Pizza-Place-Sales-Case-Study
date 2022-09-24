@@ -1,1 +1,1 @@
-dist/* linguist-vendored=true
+*.TSQL linguist-detectable=true
