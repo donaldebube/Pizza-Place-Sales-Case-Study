@@ -31,9 +31,16 @@ FROM OrderDetails
 GROUP BY pizza_id
 ORDER BY total_quantity DESC
 
-SELECT DISTINCT pizza_id,  SUM(quantity) AS quantity, COUNT([date]) AS Date
+SELECT DISTINCT pizza_id,  SUM(quantity) AS quantity, [date]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
-GROUP BY OD.order_id, pizza_id
+GROUP BY  pizza_id, [date]
 ORDER BY quantity DESC
+
+-- list of pizz_id that customers do not order
+SELECT DISTINCT OD.pizza_id, P.pizza_id
+FROM OrderDetails OD
+FULL OUTER JOIN Pizzas P
+    ON OD.pizza_id = P.pizza_id
+WHERE OD.pizza_id IS NULL
