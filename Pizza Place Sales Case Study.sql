@@ -40,9 +40,18 @@ INNER JOIN Orders O
 GROUP BY CAST([date] AS DATE)
 ORDER BY [quantity] DESC
 
+--Pizza with the highest 
+
 -- list of pizz_id that customers do not order
 SELECT DISTINCT OD.pizza_id , P.pizza_id AS [Not Ordered By Customers]
 FROM OrderDetails OD
 FULL OUTER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
 WHERE OD.pizza_id IS NULL
+
+--Top most expensive Pizza Types
+SELECT P.pizza_type_id, P.price,P.[size], PT.name, PT.category
+FROM Pizzas P
+INNER JOIN PizzaTypes PT
+    ON P.pizza_type_id = PT.pizza_type_id
+ORDER BY P.price DESC
