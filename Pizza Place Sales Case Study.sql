@@ -50,21 +50,6 @@ FULL OUTER JOIN Pizzas P
 WHERE OD.pizza_id IS NULL
 
 --Top most expensive Pizza Types
-SELECT P.pizza_type_id, P.price,P.[size], PT.name, PT.category
-FROM Pizzas P
-INNER JOIN PizzaTypes PT
-    ON P.pizza_type_id = PT.pizza_type_id
-ORDER BY P.price DESC
-
-SELECT DISTINCT pizza_id, SUM(quantity) AS total_quantity
-FROM OrderDetails
-GROUP BY pizza_id
-ORDER BY total_quantity DESC
-
-
-
-
---Still keep for further analyses
 SELECT P.pizza_type_id, P.price,P.[size], PT.name, PT.category, SUM(OD.quantity) AS total_quantity
 FROM Pizzas P
 INNER JOIN PizzaTypes PT
@@ -73,3 +58,10 @@ INNER JOIN OrderDetails OD
     ON P.pizza_id = OD.pizza_id
 GROUP BY P.pizza_type_id, P.price,P.[size], PT.name, PT.category
 ORDER BY total_quantity DESC
+
+--Still keep for further analyses
+SELECT P.pizza_type_id, P.price,P.[size], PT.name, PT.category
+FROM Pizzas P
+INNER JOIN PizzaTypes PT
+    ON P.pizza_type_id = PT.pizza_type_id
+ORDER BY P.price DESC
