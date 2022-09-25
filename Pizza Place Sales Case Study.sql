@@ -21,8 +21,8 @@ FROM PizzaTypes
 SELECT DISTINCT pizza_id
 FROM OrderDetails
 
---Total number of Pizza ID
-SELECT COUNT(DISTINCT pizza_id) AS [Total Number of Pizza ID]
+--Total number of Pizza Sold
+SELECT COUNT(DISTINCT pizza_id) AS [Total Number of Pizza Sold]
 FROM OrderDetails
 
 --List of pizza ids that are ordered the most with the sum of quantity ordered for the year
