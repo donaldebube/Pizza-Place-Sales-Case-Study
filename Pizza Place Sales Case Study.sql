@@ -32,12 +32,13 @@ FROM OrderDetails
 GROUP BY pizza_id
 ORDER BY total_quantity DESC
 
-SELECT DISTINCT pizza_id,  SUM(quantity) AS quantity, [date]
+--Days with the highest number of pizzas delivered
+SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
-GROUP BY  pizza_id, [date]
-ORDER BY quantity DESC
+GROUP BY CAST([date] AS DATE)
+ORDER BY [quantity] DESC
 
 -- list of pizz_id that customers do not order
 SELECT DISTINCT OD.pizza_id , P.pizza_id AS [Not Ordered By Customers]
