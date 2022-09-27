@@ -62,6 +62,9 @@ ALTER TABLE Orders
     ADD [Day of the Week]  INT /*new_column_datatype*/ NULL /*new_column_nullability*/
 GO
 
+--Get the specific days for each order
+
+
 
 -- List of pizzas that customers do not order
 SELECT DISTINCT OD.pizza_id , P.pizza_id AS [Not Ordered By Customers]
@@ -93,3 +96,39 @@ FROM Pizzas P
 INNER JOIN PizzaTypes PT
     ON P.pizza_type_id = PT.pizza_type_id
 ORDER BY P.price DESC
+
+
+
+
+--Test
+SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week], AVG(CAST([date] AS INT))
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
+ORDER BY [date] 
+
+
+
+
+ drop table if exists  OrdersDate
+    
+ SET DATEFIRST 1 ;  
+    
+ Declare @beginDate int = 0; 
+ Declare @pendDate int = 1;
+        
+  CREATE TABLE OrdersDate (WeekStart varchar(15), WeekEnd varchar(15),[WeekDay] varchar(15))
+  While (@beginDate < 7 and @pendDate < 8)
+     BEGIN
+      INSERT INTO OrdersDate
+          
+      Select Datepart(WK,DATEADD(day, -1 * @beginDate ,'2015-01-01')),
+      Datepart(wk,DATEADD(day, -1 * @pendDate-6 ,'2015-01-01')),
+      DATENAME(DW,Dateadd(day,1 *@beginDate,'2015-01-01'));
+       
+   SET @beginDate += 1
+   SET @pendDate += 1
+ END
+        
+  SELECT * FROM OrdersDate
