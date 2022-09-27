@@ -49,7 +49,7 @@ GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [quantity] DESC
 
 --Days with the highest number of pizzas delivered
-SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week], COUNT(DATENAME([WEEKDAY],[date]))
+SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
@@ -107,28 +107,39 @@ INNER JOIN Orders O
     ON OD.order_id = O.order_id
 GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [date] 
+GO
+
+--Create a function to determine the days of each date
+CREATE FUNCTION CalcWeekDay (@WkDay DATE)
+RETURNS DATE
+AS
+BEGIN
+    --DECLARE @DOB DATE -- DELETE THIS... NOT REQUIRED
+    DECLARE @DATE DATE
+    --SET @DOB = '10/20/1998' --DELETE THIS... NOT REQUIRED
+
+    SET @DATE = DATENAME(WEEKDAY, @WkDay) -
+                CASE
+                    WHEN
+                        (MONTH(@WkDay) > MONTH(GETDATE())) OR 
+                        (MONTH(@WkDay) = MONTH(GETDATE())) AND 
+                        (DAY(@WkDay) > DAY(GETDATE()))
+                    THEN 1
+                    ELSE 0
+                END
+
+    RETURN @WkDay --Change 'SELECT' to 'RETURN'
+END
+GO
+
+SELECT [date], dbo.CalcWeekDay(CONVERT(DATE, [date]))
+FROM Orders
 
 
-
-
- drop table if exists  OrdersDate
-    
- SET DATEFIRST 1 ;  
-    
- Declare @beginDate int = 0; 
- Declare @pendDate int = 1;
-        
-  CREATE TABLE OrdersDate (WeekStart varchar(15), WeekEnd varchar(15),[WeekDay] varchar(15))
-  While (@beginDate < 7 and @pendDate < 8)
-     BEGIN
-      INSERT INTO OrdersDate
-          
-      Select Datepart(WK,DATEADD(day, -1 * @beginDate ,'2015-01-01')),
-      Datepart(wk,DATEADD(day, -1 * @pendDate-6 ,'2015-01-01')),
-      DATENAME(DW,Dateadd(day,1 *@beginDate,'2015-01-01'));
-       
-   SET @beginDate += 1
-   SET @pendDate += 1
- END
-        
-  SELECT * FROM OrdersDate
+--Days with the highest number of pizzas delivered
+SELECT DISTINCT  quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week],  CONVERT(INT,SUM(DATENAME([WEEKDAY],[date])))
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date]), quantity
+ORDER BY [quantity] DESC
