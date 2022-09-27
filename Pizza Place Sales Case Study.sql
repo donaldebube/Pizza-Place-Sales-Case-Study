@@ -59,7 +59,7 @@ ORDER BY [quantity] DESC
 --Add 'Day of the Week' column to Order Table
 
 ALTER TABLE Orders
-    ADD [Day of the Week] /*new_column_name*/ int /*new_column_datatype*/ NULL /*new_column_nullability*/
+    ADD [Day of the Week]  INT /*new_column_datatype*/ NULL /*new_column_nullability*/
 GO
 
 
