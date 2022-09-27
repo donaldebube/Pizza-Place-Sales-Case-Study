@@ -32,13 +32,36 @@ FROM OrderDetails
 GROUP BY pizza_id
 ORDER BY total_quantity DESC
 
---Days with the highest number of pizzas delivered
+--Date with the highest number of pizzas delivered
 SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
 GROUP BY CAST([date] AS DATE)
 ORDER BY [quantity] DESC
+
+--Days with the highest number of pizzas delivered
+SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week], AVG(CAST([date] AS INT))
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
+ORDER BY [quantity] DESC
+
+--Days with the highest number of pizzas delivered
+SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week], COUNT(DATENAME([WEEKDAY],[date]))
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date]) 
+ORDER BY [quantity] DESC
+
+--Add 'Day of the Week' column to Order Table
+
+ALTER TABLE Orders
+    ADD [Day of the Week] /*new_column_name*/ int /*new_column_datatype*/ NULL /*new_column_nullability*/
+GO
+
 
 -- List of pizzas that customers do not order
 SELECT DISTINCT OD.pizza_id , P.pizza_id AS [Not Ordered By Customers]
