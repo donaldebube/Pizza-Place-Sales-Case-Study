@@ -17,13 +17,22 @@ FROM PizzaTypes
 
 --Analysis Begins
 
--- Types of pizza
+-- Types of pizza Sold in 2015
 SELECT DISTINCT pizza_id
 FROM OrderDetails
 
---Total number of Pizza Sold
-SELECT COUNT(DISTINCT pizza_id) AS [Total Number of Pizza Sold]
+--Number of Pizza types sold
+SELECT COUNT(DISTINCT pizza_id) AS [Total Number]
 FROM OrderDetails
+
+--Total number of Orders made
+SELECT COUNT(order_id) AS [Total Orders]
+FROM Orders
+
+--Total number of Pizza Sold from Jan 1, 2015 to 31 Dec, 2015
+SELECT COUNT([date]) AS [Total Number of Pizza Sold]
+FROM Orders
+
 
 --List of pizzas that are ordered the most with the sum of quantity ordered for the year
 --Most ordered Pizzas
@@ -31,6 +40,12 @@ SELECT DISTINCT pizza_id, SUM(quantity) AS total_quantity
 FROM OrderDetails
 GROUP BY pizza_id
 ORDER BY total_quantity DESC
+
+--Total Number of Pizza Sold in 2015
+SELECT DISTINCT SUM(quantity) AS [Total Pizza Sold]
+FROM OrderDetails
+--GROUP BY pizza_id
+--ORDER BY total_quantity DESC
 
 --Date with the highest number of pizzas delivered
 SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date
@@ -106,7 +121,7 @@ FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
 GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
-ORDER BY [date] 
+ORDER BY [date] DESC
 GO
 
 --Create a function to determine the days of each date
@@ -137,9 +152,9 @@ FROM Orders
 
 
 --Days with the highest number of pizzas delivered
-SELECT DISTINCT  quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week],  CONVERT(INT,SUM(DATENAME([WEEKDAY],[date])))
+SELECT COUNT(quantity), CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week],  COUNT(DISTINCT CONVERT(nvarchar,(DATENAME([WEEKDAY],[date])))) 
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
 GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date]), quantity
-ORDER BY [quantity] DESC
+
