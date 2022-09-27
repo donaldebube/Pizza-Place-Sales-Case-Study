@@ -1,1 +1,1 @@
-# Pizza-Place-Sales-Case-Study
+# A case study on the sales of pizza at the Pizza Place.
