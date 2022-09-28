@@ -136,9 +136,9 @@ ORDER BY [date] DESC
 GO
 
 SELECT
-	SUM(CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END),
+	(CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END),
+	COUNT(CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END),
 	COUNT(CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END),
-	COUNT(CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END),
 	COUNT(CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END)
 FROM orders 
 	LEFT JOIN orderdetails 
@@ -149,3 +149,13 @@ FROM orders
 		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id;
 
 
+SELECT DISTINCT category
+FROM PizzaTypes
+
+SELECT *
+FROM Orders
+
+-- Drop '[Day of the Week]' from table 'TableName' in schema 'SchemaName'
+ALTER TABLE orders
+    DROP COLUMN [Day of the Week]
+GO
