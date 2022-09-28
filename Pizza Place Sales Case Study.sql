@@ -33,6 +33,9 @@ FROM Orders
 SELECT COUNT([date]) AS [Total Number of Pizza Sold]
 FROM Orders
 
+--Total Number of Pizza Sold in 2015
+SELECT DISTINCT SUM(quantity) AS [Total Pizza Sold]
+FROM OrderDetails
 
 --List of pizzas that are ordered the most with the sum of quantity ordered for the year
 --Most ordered Pizzas
@@ -40,12 +43,6 @@ SELECT DISTINCT pizza_id, SUM(quantity) AS total_quantity
 FROM OrderDetails
 GROUP BY pizza_id
 ORDER BY total_quantity DESC
-
---Total Number of Pizza Sold in 2015
-SELECT DISTINCT SUM(quantity) AS [Total Pizza Sold]
-FROM OrderDetails
---GROUP BY pizza_id
---ORDER BY total_quantity DESC
 
 --Date with the highest number of pizzas delivered
 SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date
@@ -55,13 +52,62 @@ INNER JOIN Orders O
 GROUP BY CAST([date] AS DATE)
 ORDER BY [quantity] DESC
 
---Days with the highest number of pizzas delivered
-SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week], AVG(CAST([date] AS INT))
+--Out of the days of the week in the year, Sunday sold 7493 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Monday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
-GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
-ORDER BY [quantity] DESC
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Monday'
+
+--Out of the days of the week in the year, Monday sold 7493 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Monday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Monday'
+
+--Out of the days of the week in the year, Tuesday sold 7493 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Tuesday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Tuesday'
+
+--Out of the days of the week in the year, Wednesday sold 7493 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Wednesday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Wednesday'
+
+--Out of the days of the week in the year, Thursday sold 7493 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Thursday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Thursday'
+
+--Out of the days of the week in the year, Friday sold 8242 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Friday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Friday'
+
+--Out of the days of the week in the year, Saturday sold 7493 pizzas
+SELECT DISTINCT  SUM(quantity) AS [Quantity for Saturday] --DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+FROM OrderDetails OD
+INNER JOIN Orders O
+    ON OD.order_id = O.order_id
+GROUP BY DATENAME([WEEKDAY],[date]) 
+HAVING DATENAME([WEEKDAY],[date]) = 'Saturday'
+
 
 --Days with the highest number of pizzas delivered
 SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week]
