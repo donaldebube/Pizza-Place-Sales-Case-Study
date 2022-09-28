@@ -37,6 +37,13 @@ FROM Orders
 SELECT DISTINCT SUM(quantity) AS [Total Pizza Sold]
 FROM OrderDetails
 
+--Total revenue throughout the year
+SELECT ROUND(SUM(price), 0) AS [Total Price]
+FROM Pizzas P
+INNER JOIN OrderDetails OD
+    ON P.pizza_id = OD.pizza_id
+GO
+
 --List of pizzas that are ordered the most with the sum of quantity ordered for the year
 --Most ordered Pizzas
 SELECT DISTINCT pizza_id, SUM(quantity) AS total_quantity
@@ -188,6 +195,14 @@ GO
 
 SELECT *
 FROM OrderDetails
+
+SELECT 
+	SUM(pizzas.price) AS price
+FROM orders 
+	LEFT JOIN orderdetails 
+		ON orders.order_id = orderdetails.order_id
+	LEFT JOIN pizzas 
+		ON pizzas.pizza_id = orderdetails.pizza_id;
 
 
 
