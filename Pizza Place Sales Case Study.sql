@@ -109,6 +109,8 @@ INNER JOIN PizzaTypes PT
 ORDER BY P.price DESC
 
 
+--Get the total price of best sellig pizza and total price of least selling pizza
+
 
 
 --Test
