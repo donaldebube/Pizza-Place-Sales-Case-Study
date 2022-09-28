@@ -1,21 +1,6 @@
--- Mannually analayse the different datasets
-SELECT *
-FROM OrderDetails
-GO
+--PIZZA PLACE SALES FOR 2015
 
-SELECT *
-FROM Orders
-GO
-
-SELECT *
-FROM Pizzas
-GO
-
-SELECT *
-FROM PizzaTypes
-
-
---Analysis Begins
+--Analysis
 
 -- Types of pizza Sold in 2015
 SELECT DISTINCT pizza_id
@@ -182,3 +167,21 @@ FROM orders
 GROUP BY MONTH(orders.date)
 ORDER BY [Total Quantity] DESC
 GO
+
+
+-- Mannually analayse the different datasets
+-- SELECT *
+-- FROM OrderDetails
+-- GO
+
+-- SELECT *
+-- FROM Orders
+-- GO
+
+-- SELECT *
+-- FROM Pizzas
+-- GO
+
+-- SELECT *
+-- FROM PizzaTypes
+
