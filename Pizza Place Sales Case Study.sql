@@ -148,8 +148,20 @@ FROM orders
 		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id
 GO
 
+--Top 5 most expensive Pizzas with their respective quantities for the year
+SELECT DISTINCT  
+    PT.name AS Name, 
+    ROUND(SUM(P.price), 2) AS [Total Price], 
+    SUM(OD.quantity) AS [Total Quantity]
+FROM OrderDetails OD
+INNER JOIN Pizzas P
+    ON OD.pizza_id = P.pizza_id
+INNER JOIN PizzaTypes PT
+    ON P.pizza_type_id = PT.pizza_type_id
+GROUP BY PT.name, OD.quantity
+ORDER BY [Total Price] DESC
+GO
 
---Get the total price of best sellig pizza and total price of least selling pizza
 
 
 
@@ -165,19 +177,7 @@ GO
 SELECT *
 FROM OrderDetails
 
---Top 5 most expensive Pizzas with their respective quantities for the year
-SELECT DISTINCT  
-    PT.name AS Name, 
-    ROUND(SUM(P.price), 2) AS [Total Price], 
-    SUM(OD.quantity) AS [Total Quantity]
-FROM OrderDetails OD
-INNER JOIN Pizzas P
-    ON OD.pizza_id = P.pizza_id
-INNER JOIN PizzaTypes PT
-    ON P.pizza_type_id = PT.pizza_type_id
-GROUP BY PT.name, OD.quantity
-ORDER BY [Total Price] DESC
-GO
+
 
 
 
