@@ -136,24 +136,47 @@ ORDER BY [date] DESC
 GO
 
 SELECT
-	(CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END),
-	COUNT(CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END),
-	COUNT(CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END),
-	COUNT(CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END)
+	SUM(CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END) AS Chicken,
+	SUM(CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END) AS Classic,
+	SUM(CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END) AS Supreme,
+	SUM(CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END) AS Veggie
 FROM orders 
-	LEFT JOIN orderdetails 
+	INNER JOIN orderdetails 
 		ON orders.order_id = orderdetails.order_id
-	LEFT JOIN pizzas 
+	INNER JOIN pizzas 
 		ON pizzas.pizza_id = orderdetails.pizza_id
-	LEFT JOIN pizzatypes
+	INNER JOIN pizzatypes
 		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id;
 
+GO
 
 SELECT DISTINCT category
 FROM PizzaTypes
 
-SELECT *
-FROM Orders
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- Drop '[Day of the Week]' from table 'TableName' in schema 'SchemaName'
 ALTER TABLE orders
