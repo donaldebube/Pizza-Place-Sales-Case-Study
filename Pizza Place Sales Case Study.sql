@@ -113,7 +113,11 @@ GROUP BY P.pizza_type_id, P.price,P.[size], PT.name, PT.category
 ORDER BY total_quantity DESC
 
 --Still keep for further analyses
-SELECT P.pizza_type_id, P.price,P.[size], PT.name, PT.category
+SELECT 
+    P.pizza_type_id, 
+    P.price,P.[size], 
+    PT.name, 
+    PT.category
 FROM Pizzas P
 INNER JOIN PizzaTypes PT
     ON P.pizza_type_id = PT.pizza_type_id
