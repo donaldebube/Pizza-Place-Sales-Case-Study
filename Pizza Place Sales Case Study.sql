@@ -45,11 +45,11 @@ GROUP BY pizza_id
 ORDER BY total_quantity DESC
 
 --Date with the highest number of pizzas delivered
-SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date
+SELECT DISTINCT TOP 20  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
-GROUP BY CAST([date] AS DATE)
+GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [quantity] DESC
 
 --Most preferred days for customers to order throughout the year based on the quantity of orders each weekday
@@ -108,6 +108,19 @@ INNER JOIN PizzaTypes PT
     ON P.pizza_type_id = PT.pizza_type_id
 ORDER BY P.price DESC
 
+-- Total pizza quantity by the 5 different sizes
+SELECT
+	pizzas.size, SUM(OrderDetails.quantity) AS quantity
+FROM orders 
+	INNER JOIN OrderDetails
+		ON orders.order_id = orderdetails.order_id
+	INNER JOIN pizzas 
+		ON pizzas.pizza_id = orderdetails.pizza_id
+	INNER JOIN pizzatypes
+		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id
+GROUP BY pizzas.size
+ORDER BY quantity DESC;
+
 
 --Get the total price of best sellig pizza and total price of least selling pizza
 
@@ -121,5 +134,18 @@ INNER JOIN Orders O
 GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [date] DESC
 GO
+
+SELECT
+	SUM(CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END),
+	COUNT(CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END),
+	COUNT(CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END),
+	COUNT(CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END)
+FROM orders 
+	LEFT JOIN orderdetails 
+		ON orders.order_id = orderdetails.order_id
+	LEFT JOIN pizzas 
+		ON pizzas.pizza_id = orderdetails.pizza_id
+	LEFT JOIN pizzatypes
+		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id;
 
 
