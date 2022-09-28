@@ -162,7 +162,19 @@ GROUP BY PT.name, OD.quantity
 ORDER BY [Total Price] DESC
 GO
 
-
+-- Revenue for each month by price
+SELECT 
+	MONTH(orders.date) AS Month,
+	SUM(OrderDetails.quantity) AS [Total Quantity],
+	ROUND(SUM(pizzas.price), 0) AS Price
+FROM orders 
+	INNER JOIN orderdetails 
+		ON orders.order_id = orderdetails.order_id
+	INNER JOIN pizzas 
+		ON pizzas.pizza_id = orderdetails.pizza_id
+GROUP BY MONTH(orders.date)
+ORDER BY [Total Quantity] DESC
+GO
 
 
 --Test
@@ -176,7 +188,6 @@ GO
 
 SELECT *
 FROM OrderDetails
-
 
 
 
