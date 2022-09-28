@@ -31,13 +31,18 @@ GO
 
 --List of pizzas that are ordered the most with the sum of quantity ordered for the year
 --Most ordered Pizzas
-SELECT DISTINCT pizza_id, SUM(quantity) AS total_quantity
+SELECT DISTINCT 
+    pizza_id, 
+    SUM(quantity) AS total_quantity
 FROM OrderDetails
 GROUP BY pizza_id
 ORDER BY total_quantity DESC
 
 --Date with the highest number of pizzas delivered
-SELECT DISTINCT TOP 20  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+SELECT DISTINCT TOP 20  
+    COUNT(quantity) AS quantity, 
+    CAST([date] AS DATE) AS date, 
+    DATENAME([WEEKDAY],[date]) AS [Day of the Week]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
@@ -45,7 +50,9 @@ GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [quantity] DESC
 
 --Most preferred days for customers to order throughout the year based on the quantity of orders each weekday
-SELECT DISTINCT  SUM(quantity) AS [Quantity for Sunday], DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+SELECT DISTINCT  
+    SUM(quantity) AS [Quantity for Sunday], 
+    DATENAME([WEEKDAY],[date]) AS [Day of the Week]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
@@ -62,7 +69,10 @@ ORDER BY [Quantity for Sunday] DESC
 GO
 
 --Days with the highest number of pizzas delivered
-SELECT DISTINCT  COUNT(quantity) AS quantity, CAST([date] AS DATE) AS date, DATENAME([WEEKDAY],[date]) AS [Day of the Week]
+SELECT DISTINCT  
+    COUNT(quantity) AS quantity, 
+    CAST([date] AS DATE) AS date, 
+    DATENAME([WEEKDAY],[date]) AS [Day of the Week]
 FROM OrderDetails OD
 INNER JOIN Orders O
     ON OD.order_id = O.order_id
@@ -70,21 +80,30 @@ GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [quantity] DESC
 
 -- List of pizzas that customers do not order
-SELECT DISTINCT OD.pizza_id , P.pizza_id AS [Not Ordered By Customers]
+SELECT DISTINCT 
+    OD.pizza_id , 
+    P.pizza_id AS [Not Ordered By Customers]
 FROM OrderDetails OD
 FULL OUTER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
 WHERE OD.pizza_id IS NULL
 
 -- List of pizzas that customers do order
-SELECT DISTINCT OD.pizza_id , P.pizza_id AS [Ordered]
+SELECT DISTINCT 
+    OD.pizza_id ,
+     P.pizza_id AS [Ordered]
 FROM OrderDetails OD
 FULL OUTER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
 WHERE OD.pizza_id IS NOT NULL
 
 --Top most expensive Pizza Types
-SELECT P.pizza_type_id, P.price,P.[size], PT.name, PT.category, SUM(OD.quantity) AS total_quantity
+SELECT 
+    P.pizza_type_id, 
+    P.price,P.[size], 
+    PT.name, 
+    PT.category, 
+    SUM(OD.quantity) AS total_quantity
 FROM Pizzas P
 INNER JOIN PizzaTypes PT
     ON P.pizza_type_id = PT.pizza_type_id
