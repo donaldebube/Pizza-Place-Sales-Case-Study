@@ -125,15 +125,16 @@ ORDER BY P.price DESC
 
 -- Total pizza quantity by the 5 different sizes
 SELECT
-	pizzas.size, SUM(OrderDetails.quantity) AS quantity
+	pizzas.size, 
+    SUM(OrderDetails.quantity) AS quantity
 FROM orders 
 	INNER JOIN OrderDetails
-		ON orders.order_id = orderdetails.order_id
+		ON orders.order_id = OrderDetails.order_id
 	INNER JOIN pizzas 
-		ON pizzas.pizza_id = orderdetails.pizza_id
+		ON pizzas.pizza_id = OrderDetails.pizza_id
 	INNER JOIN pizzatypes
-		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id
-GROUP BY pizzas.size
+		ON PizzaTypes.pizza_type_id = Pizzas.pizza_type_id
+GROUP BY Pizzas.size
 ORDER BY quantity DESC;
 
 --% quantity for the year, for each category of pizza
