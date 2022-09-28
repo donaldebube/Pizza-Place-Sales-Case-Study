@@ -121,6 +121,33 @@ FROM orders
 GROUP BY pizzas.size
 ORDER BY quantity DESC;
 
+--% quantity for the year, for each category of pizza
+SELECT
+	ROUND (SUM
+        (
+            CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END
+        )/SUM(OrderDetails.quantity) * 100,2)  AS 'Chicken %',
+	ROUND (SUM
+        (
+            CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END
+        )/SUM(OrderDetails.quantity) * 100,2)  AS [Classic %],
+	ROUND (SUM
+        (
+            CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END
+        )/SUM(OrderDetails.quantity) * 100,2)   AS [Supreme %],
+	ROUND (SUM
+    (
+        CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END
+    )/SUM(OrderDetails.quantity) * 100,2)   AS 'Veggie %'
+FROM orders 
+	INNER JOIN orderdetails 
+		ON orders.order_id = orderdetails.order_id
+	INNER JOIN pizzas 
+		ON pizzas.pizza_id = orderdetails.pizza_id
+	INNER JOIN pizzatypes
+		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id
+GO
+
 
 --Get the total price of best sellig pizza and total price of least selling pizza
 
@@ -161,6 +188,9 @@ FROM orders
 		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id;
 
 GO
+
+
+
 
 
 
