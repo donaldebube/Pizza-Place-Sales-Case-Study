@@ -136,10 +136,22 @@ ORDER BY [date] DESC
 GO
 
 SELECT
-	SUM(CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END) AS Chicken,
-	SUM(CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END) AS Classic,
-	SUM(CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END) AS Supreme,
-	SUM(CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END) AS Veggie
+	SUM
+        (
+            CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END
+        )   AS Chicken,
+	SUM
+        (
+            CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END
+        )   AS Classic,
+	SUM
+        (
+            CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END
+        )   AS Supreme,
+	SUM
+    (
+        CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END
+    )   AS Veggie
 FROM orders 
 	INNER JOIN orderdetails 
 		ON orders.order_id = orderdetails.order_id
@@ -150,8 +162,7 @@ FROM orders
 
 GO
 
-SELECT DISTINCT category
-FROM PizzaTypes
+
 
 
 
