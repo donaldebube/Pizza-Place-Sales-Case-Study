@@ -162,32 +162,27 @@ GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [date] DESC
 GO
 
-SELECT
-	SUM
-        (
-            CASE WHEN pizzatypes.category = 'Chicken' THEN orderdetails.quantity ELSE NULL END
-        )   AS Chicken,
-	SUM
-        (
-            CASE WHEN pizzatypes.category = 'Classic' THEN orderdetails.quantity ELSE NULL END
-        )   AS Classic,
-	SUM
-        (
-            CASE WHEN pizzatypes.category = 'Supreme' THEN orderdetails.quantity ELSE NULL END
-        )   AS Supreme,
-	SUM
-    (
-        CASE WHEN pizzatypes.category = 'Veggie' THEN orderdetails.quantity ELSE NULL END
-    )   AS Veggie
+SELECT TOP 5 
+	pizzatypes.name,
+	SUM(pizzas.price) AS price
 FROM orders 
-	INNER JOIN orderdetails 
+	LEFT JOIN orderdetails 
 		ON orders.order_id = orderdetails.order_id
-	INNER JOIN pizzas 
+	LEFT JOIN pizzas 
 		ON pizzas.pizza_id = orderdetails.pizza_id
-	INNER JOIN pizzatypes
-		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id;
+	LEFT JOIN pizzatypes
+		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id
+GROUP BY pizzatypes.name,pizzatypes.category
+ORDER BY price DESC;
 
-GO
+SELECT DISTINCT OD.pizza_id, OD.quantity, P.price, PT.name --DISTINCT TOP 5 pizza_id, SUM(quantity) AS total_quantity
+FROM OrderDetails OD
+INNER JOIN Pizzas P
+    ON OD.pizza_id = P.pizza_id
+INNER JOIN PizzaTypes PT
+    ON P.pizza_type_id = PT.pizza_type_id
+-- GROUP BY pizza_id
+-- ORDER BY total_quantity DESC
 
 
 
