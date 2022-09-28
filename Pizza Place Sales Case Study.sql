@@ -162,29 +162,23 @@ GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date])
 ORDER BY [date] DESC
 GO
 
-SELECT TOP 5 
-	pizzatypes.name,
-	SUM(pizzas.price) AS price
-FROM orders 
-	LEFT JOIN orderdetails 
-		ON orders.order_id = orderdetails.order_id
-	LEFT JOIN pizzas 
-		ON pizzas.pizza_id = orderdetails.pizza_id
-	LEFT JOIN pizzatypes
-		ON pizzatypes.pizza_type_id = pizzas.pizza_type_id
-GROUP BY pizzatypes.name,pizzatypes.category
-ORDER BY price DESC;
+SELECT *
+FROM OrderDetails
 
-SELECT DISTINCT TOP 5 SUM(P.price) AS price, PT.name --DISTINCT TOP 5 pizza_id, SUM(quantity) AS total_quantity
+--Top 5 most expensive Pizzas with their respective quantities for the year
+SELECT DISTINCT  
+    PT.name AS Name, 
+    ROUND(SUM(P.price), 2) AS [Total Price], 
+    SUM(OD.quantity) AS [Total Quantity]
 FROM OrderDetails OD
 INNER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
 INNER JOIN PizzaTypes PT
     ON P.pizza_type_id = PT.pizza_type_id
-GROUP BY PT.name
-ORDER BY price DESC
+GROUP BY PT.name, OD.quantity
+ORDER BY [Total Price] DESC
+GO
 
-SELECT 
 
 
 
