@@ -177,7 +177,7 @@ FROM orders
 	INNER JOIN pizzas 
 		ON pizzas.pizza_id = orderdetails.pizza_id
 GROUP BY DATENAME(MONTH,Orders.[date])
-ORDER BY [Total Quantity] DESC
+ORDER BY [Month] 
 GO
 
 
