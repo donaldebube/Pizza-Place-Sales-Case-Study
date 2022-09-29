@@ -84,15 +84,6 @@ FULL OUTER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
 WHERE OD.pizza_id IS NOT NULL 
 
--- List of pizzas that customers do order
-SELECT DISTINCT 
-    OD.pizza_id ,
-     P.pizza_id AS [Ordered]
-FROM OrderDetails OD
-FULL OUTER JOIN Pizzas P
-    ON OD.pizza_id = P.pizza_id
-WHERE OD.pizza_id IS NOT NULL
-
 --Top most expensive Pizza Types
 SELECT 
     P.pizza_type_id, 
