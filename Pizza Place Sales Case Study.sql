@@ -167,7 +167,7 @@ GO
 
 -- Revenue for each month by price
 SELECT 
-    DATENAME(MONTH,Orders.[date]), 
+    DATENAME(MONTH,Orders.[date]) AS Month, 
 	--MONTH(orders.date) AS Month,
 	SUM(OrderDetails.quantity) AS [Total Quantity],
 	ROUND(SUM(pizzas.price), 0) AS Price
