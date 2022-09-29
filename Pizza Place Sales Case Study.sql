@@ -68,25 +68,21 @@ HAVING
 ORDER BY [Quantity for Sunday] DESC
 GO
 
---Days with the highest number of pizzas delivered
-SELECT DISTINCT  
-    COUNT(quantity) AS quantity, 
-    CAST([date] AS DATE) AS date, 
-    DATENAME([WEEKDAY],[date]) AS [Day of the Week]
-FROM OrderDetails OD
-INNER JOIN Orders O
-    ON OD.order_id = O.order_id
-GROUP BY CAST([date] AS DATE), DATENAME([WEEKDAY],[date]) 
-ORDER BY [quantity] DESC
-
 -- List of pizzas that customers do not order
-SELECT DISTINCT 
-    OD.pizza_id , 
+SELECT DISTINCT  
     P.pizza_id AS [Not Ordered By Customers]
 FROM OrderDetails OD
 FULL OUTER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
-WHERE OD.pizza_id IS NULL
+WHERE OD.pizza_id IS NULL 
+
+-- List of pizzas that customers order
+SELECT DISTINCT  
+    P.pizza_id AS [Not Ordered By Customers]
+FROM OrderDetails OD
+FULL OUTER JOIN Pizzas P
+    ON OD.pizza_id = P.pizza_id
+WHERE OD.pizza_id IS NOT NULL 
 
 -- List of pizzas that customers do order
 SELECT DISTINCT 
