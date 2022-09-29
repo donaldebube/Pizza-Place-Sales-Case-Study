@@ -78,7 +78,7 @@ WHERE OD.pizza_id IS NULL
 
 -- List of pizzas that customers order
 SELECT DISTINCT  
-    P.pizza_id AS [Not Ordered By Customers]
+    P.pizza_id AS [Ordered By Customers]
 FROM OrderDetails OD
 FULL OUTER JOIN Pizzas P
     ON OD.pizza_id = P.pizza_id
