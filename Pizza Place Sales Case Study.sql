@@ -112,8 +112,8 @@ ORDER BY P.price DESC
 
 -- Total pizza quantity by the 5 different sizes
 SELECT DISTINCT
-	pizzas.size, SUM(pizzas.price) 
-   -- SUM(OrderDetails.quantity) AS quantity,
+	pizzas.size, 
+    SUM(OrderDetails.quantity) AS quantity
 FROM orders 
 	INNER JOIN OrderDetails
 		ON orders.order_id = OrderDetails.order_id
