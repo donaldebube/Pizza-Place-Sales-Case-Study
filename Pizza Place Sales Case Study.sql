@@ -122,7 +122,7 @@ FROM orders
 	INNER JOIN pizzatypes
 		ON PizzaTypes.pizza_type_id = Pizzas.pizza_type_id
 GROUP BY Pizzas.size
---ORDER BY quantity DESC;
+ORDER BY quantity DESC;
 
 -- Total pizza price by the 5 different sizes
 SELECT DISTINCT
