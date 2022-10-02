@@ -128,7 +128,6 @@ ORDER BY quantity DESC;
 SELECT DISTINCT
 	pizzas.size, 
     SUM(pizzas.price) 
-   -- SUM(OrderDetails.quantity) AS quantity,
 FROM orders 
 	INNER JOIN OrderDetails
 		ON orders.order_id = OrderDetails.order_id
