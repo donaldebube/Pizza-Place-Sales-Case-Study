@@ -124,6 +124,20 @@ FROM orders
 GROUP BY Pizzas.size
 --ORDER BY quantity DESC;
 
+-- Total pizza quantity by the 5 different sizes
+SELECT DISTINCT
+	pizzas.size, SUM(pizzas.price) 
+   -- SUM(OrderDetails.quantity) AS quantity,
+FROM orders 
+	INNER JOIN OrderDetails
+		ON orders.order_id = OrderDetails.order_id
+	INNER JOIN pizzas 
+		ON pizzas.pizza_id = OrderDetails.pizza_id
+	INNER JOIN pizzatypes
+		ON PizzaTypes.pizza_type_id = Pizzas.pizza_type_id
+GROUP BY Pizzas.size
+--ORDER BY quantity DESC;
+
 --% quantity for the year, for each category of pizza
 SELECT
 	ROUND (SUM
