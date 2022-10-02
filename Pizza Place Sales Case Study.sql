@@ -182,9 +182,9 @@ GO
 
 
 -- Mannually analayse the different datasets
--- SELECT *
--- FROM OrderDetails
--- GO
+SELECT *
+FROM OrderDetails
+GO
 
 -- SELECT *
 -- FROM Orders
@@ -194,6 +194,6 @@ GO
 -- FROM Pizzas
 -- GO
 
--- SELECT *
--- FROM PizzaTypes
+SELECT distinct ingredients
+FROM PizzaTypes
 
