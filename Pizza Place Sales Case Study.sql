@@ -124,7 +124,7 @@ FROM orders
 GROUP BY Pizzas.size
 --ORDER BY quantity DESC;
 
--- Total pizza quantity by the 5 different sizes
+-- Total pizza price by the 5 different sizes
 SELECT DISTINCT
 	pizzas.size, SUM(pizzas.price) 
    -- SUM(OrderDetails.quantity) AS quantity,
