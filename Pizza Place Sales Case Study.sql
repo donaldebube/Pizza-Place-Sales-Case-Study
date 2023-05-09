@@ -240,7 +240,7 @@ INNER JOIN PizzaTypes AS PT
     ON PT.pizza_type_id = P.pizza_type_id
 GO
 
--- 
+-- Getting the count
 SELECT COUNT(*) AS COUNT
 FROM OrderDetails AS OD
 INNER JOIN Orders AS O
