@@ -211,3 +211,42 @@ GO
 -- SELECT distinct ingredients
 -- FROM PizzaTypes
 
+
+-- To get the 4 major tables
+SELECT TOP 20 *
+FROM OrderDetails
+GO
+
+SELECT TOP 20 *
+FROM Orders
+GO
+
+SELECT TOP 20 *
+FROM Pizzas
+GO
+
+SELECT TOP 20 *
+FROM PizzaTypes
+GO
+
+-- Joining the different datasets for SSIS Transformation Practice
+SELECT *
+FROM OrderDetails AS OD
+INNER JOIN Orders AS O
+    ON OD.order_id = o.order_id
+INNER JOIN Pizzas AS P
+    ON P.pizza_id = OD.pizza_id
+INNER JOIN PizzaTypes AS PT
+    ON PT.pizza_type_id = P.pizza_type_id
+GO
+
+-- 
+SELECT COUNT(*) AS COUNT
+FROM OrderDetails AS OD
+INNER JOIN Orders AS O
+    ON OD.order_id = o.order_id
+INNER JOIN Pizzas AS P
+    ON P.pizza_id = OD.pizza_id
+INNER JOIN PizzaTypes AS PT
+    ON PT.pizza_type_id = P.pizza_type_id
+GO
