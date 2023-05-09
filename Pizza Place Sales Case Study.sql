@@ -241,7 +241,7 @@ INNER JOIN PizzaTypes AS PT
 GO
 
 -- Getting the count
-SELECT COUNT(*) AS COUNT
+SELECT COUNT(*) AS [ROW COUNT]
 FROM OrderDetails AS OD
 INNER JOIN Orders AS O
     ON OD.order_id = o.order_id
